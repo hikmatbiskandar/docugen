@@ -31,8 +31,12 @@ class TemplateController extends Controller
     public function edit(string $name = null)
     {
         $template = '';
+
+        $name = urldecode($name);
+
         if ($name) {
             $path = "{$this->templatePath}/{$name}.html";
+
             if (Storage::disk($this->disk)->exists($path)) {
                 $template = Storage::disk($this->disk)->get($path);
             } else {

@@ -1,33 +1,31 @@
 @extends('layouts.app')
 
-@section('content')
-<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-400 to-purple-600">
-    <div class="w-full max-w-[1024px] mx-auto bg-[#313331]  rounded-lg shadow-2xl flex flex-col" style="box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37);">
-        <!-- Title Bar -->
-        <div class="flex items-center justify-between bg-[#313331] px-4 py-2 border-b border-gray-400 rounded-t-lg">
-            <div class="flex items-center space-x-2">
-                
-                <h1 class="ml-4 text-base font-semibold text-white">Your PDF Templates</h1>
-            </div>
-            <div class="space-x-2">
-                <button class="text-xs px-4 py-1 bg-blue-500 text-white rounded shadow hover:bg-blue-600">New</button>
-                <button class="text-xs px-4 py-1 bg-gray-300 text-gray-800 rounded hover:bg-gray-400">Sort</button>
-            </div>
-        </div>
+@section('header_title', 'Your PDF Templates')
 
-        <!-- Content Area -->
-        <div class="flex-1 bg-white rounded-b-lg p-6">
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-7 gap-6">
-                @foreach ($templates ?? [] as $template)
-                <div class="flex flex-col items-center p-4 border border-gray-300 bg-gray-50 rounded hover:bg-blue-100 hover:border-blue-400 cursor-pointer transition">
-                    <a href="{{ route('templates.view', [ "template"=>urlencode($template ]) }}">
-                        <i class="fa fa-file-pdf-o fa-3x text-red-500 mb-2" aria-hidden="true"></i>
-                        <span class="text-xs text-gray-900 text-center">{{ $template }}</span>
-                    </div>
-                </a>
-                @endforeach
-            </div>
+@section('content')
+
+@foreach ($templates ?? [] as $template)
+
+<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-7 gap-6">
+    <div class="flex flex-col items-center p-4 border border-gray-300 bg-gray-50 rounded-lg hover:bg-gray-100 hover:border-gray-400 cursor-pointer transition relative h-44 min-w-[12rem] flex-1 justify-between">
+        <div class="flex flex-col items-center w-full flex-1">
+            <i class="fa fa-file-pdf-o fa-3x text-red-500 mb-2" aria-hidden="true"></i>
+            <span class="text-xs text-gray-900 text-center break-words">{{ $template }}</span>
+        </div>
+        <div class="flex w-full divide-x border-t border-gray-200 mt-1 pt-0 absolute bottom-0 left-0">
+            <a href="{{ route('templates.view', [ 'template' => urlencode($template) ]) }}" class="flex-1 text-center py-2 text-gray-500 hover:text-gray-700 hover:bg-gray-50 transition border-r last:border-r-0 rounded-bl-lg" title="View">
+                <i class="fa fa-eye"></i>
+            </a>
+            <a href="{{ route('templates.edit', [ 'name' => urlencode($template) ]) }}" class="flex-1 text-center py-2 text-gray-500 hover:text-gray-700 hover:bg-gray-50 transition border-r last:border-r-0" title="Edit">
+                <i class="fa fa-pencil"></i>
+            </a>
+            <a href="{{ route('templates.view', [ 'template' => urlencode($template) ]) }}" class="flex-1 text-center py-2 text-gray-500 hover:text-gray-700 hover:bg-gray-50 transition rounded-br-lg" title="Generate">
+                <i class="fa fa-cogs"></i>
+            </a>
         </div>
     </div>
 </div>
+
+@endforeach
+
 @endsection
